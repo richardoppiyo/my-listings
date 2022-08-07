@@ -2,6 +2,15 @@ import React from "react";
 import styles from "./TodoItem.module.css"
 
 class TodoItem extends React.Component {
+  state = {
+    editing: false,
+  }
+
+  handleEditing = () => {
+    this.setState({
+      editing: true,
+    })
+  }
     render () {
 
         const completedStyle = {
@@ -19,12 +28,15 @@ class TodoItem extends React.Component {
                 checked={this.props.todo.completed}
                 onChange={() => this.props.handleChangeProps(id)}
               />
+              <div onDoubleClick={this.handleEditing}>
               <button onClick={() => this.props.deleteTodoProps(id)}>
                 Delete
               </button>
               <span style={id.completed ? completedStyle : null}>
                 {this.props.todo.title}
               </span>
+              </div>
+              <input type="text" className={styles.textInput} />
             </li>
           )
     }
