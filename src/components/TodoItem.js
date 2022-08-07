@@ -2,15 +2,42 @@ import React from "react";
 import styles from "./TodoItem.module.css"
 
 class TodoItem extends React.Component {
+  state = {
+    editing: false,
+  }
+
+  handleEditing = () => {
+        this.setState({
+              editing: true,
+            })
+          }
+          handleUpdatedDone = event => {
+            if (event.key === "Enter") {
+              this.setState({ editing: false })
+            }
+          }
+          componentWillUnmount() {
+            console.log("Cleaning up...")
+          }
+          
     render () {
 
+        let viewMode = {}
+        let editMode = {}
+
+        if (this.state.editing) {
+          viewMode.display = "none"
+        } else {
+          editMode.display = "none"
+        }
         const completedStyle = {
             fontStyle: "italic",
             color: "#595959",
             opacity: 0.4,
             textDecoration: "line-through",
           }
-        const { id } = this.props.todo
+        // const { id } = this.props.todo
+        const { completed, id, title } = this.props.todo
         return (
             <li className={styles.item}>
               <input
@@ -19,12 +46,24 @@ class TodoItem extends React.Component {
                 checked={this.props.todo.completed}
                 onChange={() => this.props.handleChangeProps(id)}
               />
+              <div onDoubleClick={this.handleEditing} style={viewMode}>
               <button onClick={() => this.props.deleteTodoProps(id)}>
                 Delete
               </button>
-              <span style={id.completed ? completedStyle : null}>
-                {this.props.todo.title}
+              <span style={completed ? completedStyle : null}>
+                {title}
               </span>
+              </div>
+              <input 
+                type="text" 
+                style={editMode} 
+                className={styles.textInput} 
+                value={title}
+                onChange={e => {
+                  this.props.setUpdate(e.target.value, id)
+                }}
+                onKeyDown={this.handleUpdatedDone}
+                />
             </li>
           )
     }
