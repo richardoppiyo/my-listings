@@ -44,7 +44,7 @@ class TodoItem extends React.Component {
                 {this.props.todo.title}
               </span>
               </div>
-              <input type="text" style={editMode} className={styles.textInput} />
+              <input type="text" style={editMode} className={styles.textInput} value={title}/>
             </li>
           )
     }
