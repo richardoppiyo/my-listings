@@ -27,7 +27,8 @@ class TodoItem extends React.Component {
             opacity: 0.4,
             textDecoration: "line-through",
           }
-        const { id } = this.props.todo
+        // const { id } = this.props.todo
+        const { completed, id, title } = this.props.todo
         return (
             <li className={styles.item}>
               <input
@@ -40,8 +41,8 @@ class TodoItem extends React.Component {
               <button onClick={() => this.props.deleteTodoProps(id)}>
                 Delete
               </button>
-              <span style={id.completed ? completedStyle : null}>
-                {this.props.todo.title}
+              <span style={completed ? completedStyle : null}>
+                {title}
               </span>
               </div>
               <input type="text" style={editMode} className={styles.textInput} value={title}/>
