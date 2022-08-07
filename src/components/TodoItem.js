@@ -7,12 +7,20 @@ class TodoItem extends React.Component {
   }
 
   handleEditing = () => {
-    this.setState({
-      editing: true,
-    })
-  }
+        this.setState({
+              editing: true,
+            })
+          }
     render () {
 
+        let viewMode = {}
+        let editMode = {}
+
+        if (this.state.editing) {
+          viewMode.display = "none"
+        } else {
+          editMode.display = "none"
+        }
         const completedStyle = {
             fontStyle: "italic",
             color: "#595959",
@@ -28,7 +36,7 @@ class TodoItem extends React.Component {
                 checked={this.props.todo.completed}
                 onChange={() => this.props.handleChangeProps(id)}
               />
-              <div onDoubleClick={this.handleEditing}>
+              <div onDoubleClick={this.handleEditing} style={viewMode}>
               <button onClick={() => this.props.deleteTodoProps(id)}>
                 Delete
               </button>
@@ -36,7 +44,7 @@ class TodoItem extends React.Component {
                 {this.props.todo.title}
               </span>
               </div>
-              <input type="text" className={styles.textInput} />
+              <input type="text" style={editMode} className={styles.textInput} />
             </li>
           )
     }
